@@ -17,6 +17,7 @@ import {
   getDocumentExpiryStatus,
   getMissingDocumentsForCases,
 } from '../../engine/workflowEngine';
+import { sanitiseInput } from '../../services/storageAdapter';
 
 const CATEGORY_LABELS: Record<VaultDocumentCategory | 'all', string> = {
   all: 'All categories',
@@ -106,8 +107,8 @@ export const VaultScreen: React.FC = () => {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) {
-      setFormError('Please provide a fictional document title.');
+    if (!sanitiseInput(title, 100)) {
+      setFormError('Please provide a valid fictional document title.');
       return;
     }
     setFormError('');

@@ -511,18 +511,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const toggleChecklistItem = (caseId: string, itemId: string) => {
     const nowIso = new Date().toISOString();
-    let toggledTitle = '';
-    let becameCompleted = false;
+    const existingCase = state.cases.find((c) => c.id === caseId);
+    const existingItem = existingCase?.checklist.find((i) => i.id === itemId);
+    if (!existingItem) return;
+
+    const toggledTitle = existingItem.title;
+    const becameCompleted = !existingItem.completed;
 
     mutateCase(caseId, (c) => {
       const nextChecklist = c.checklist.map((item) => {
         if (item.id !== itemId) return item;
-        toggledTitle = item.title;
-        becameCompleted = !item.completed;
         return {
           ...item,
-          completed: !item.completed,
-          completedAt: !item.completed ? nowIso : undefined,
+          completed: becameCompleted,
+          completedAt: becameCompleted ? nowIso : undefined,
         };
       });
 
@@ -914,23 +916,57 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const updateVaultDocument = (id: string, patch: Partial<VaultDocument>) => {
-    setState((prev) => ({
-      ...prev,
-      vaultDocuments: prev.vaultDocuments.map((d) =>
-        d.id === id
-          ? {
-              ...d,
-              ...patch,
-              title: patch.title !== undefined ? sanitiseInput(patch.title, 100) : d.title,
-              fictionalRefCode:
-                patch.fictionalRefCode !== undefined
-                  ? sanitiseInput(patch.fictionalRefCode, 48)
-                  : d.fictionalRefCode,
-              notes: patch.notes !== undefined ? sanitiseInput(patch.notes, 300) : d.notes,
-            }
-          : d
-      ),
-    }));
+    const nowIso = new Date().toISOString();
+    setState((prev) => {
+      let updatedDoc: VaultDocument | null = null;
+      const nextDocs = prev.vaultDocuments.map((d) => {
+        if (d.id !== id) return d;
+        const safeTitle =
+          patch.title !== undefined ? sanitiseInput(patch.title, 100) || d.title : d.title;
+        const nextDoc: VaultDocument = {
+          ...d,
+          ...patch,
+          title: safeTitle,
+          fictionalRefCode:
+            patch.fictionalRefCode !== undefined
+              ? sanitiseInput(patch.fictionalRefCode, 48) || d.fictionalRefCode
+              : d.fictionalRefCode,
+          notes: patch.notes !== undefined ? sanitiseInput(patch.notes, 300) : d.notes,
+        };
+        updatedDoc = nextDoc;
+        return nextDoc;
+      });
+
+      let nextNotifications = prev.notifications;
+      if (updatedDoc) {
+        const docRef: VaultDocument = updatedDoc;
+        const expiry = getDocumentExpiryStatus(docRef);
+        const alreadyHasAlert = prev.notifications.some(
+          (n) => !n.dismissed && n.kind === 'document_expiry' && n.relatedDocId === docRef.id
+        );
+        if ((expiry.status === 'expired' || expiry.status === 'expiring_soon') && !alreadyHasAlert) {
+          const expiryNotif: SimulatedNotification = {
+            id: uid('notif'),
+            kind: 'document_expiry',
+            urgency: expiry.status === 'expired' ? 'high' : 'medium',
+            title: `Vault reminder: ${docRef.title}`,
+            body: `${expiry.label}. Fictional document metadata updated in Vault.`,
+            createdAt: nowIso,
+            read: false,
+            dismissed: false,
+            relatedDocId: docRef.id,
+            targetTab: 'vault',
+          };
+          nextNotifications = [expiryNotif, ...prev.notifications];
+        }
+      }
+
+      return {
+        ...prev,
+        vaultDocuments: nextDocs,
+        notifications: nextNotifications,
+      };
+    });
     showToast('Fictional document record updated.', 'success');
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AlertTriangle,
   Archive,
@@ -34,6 +34,7 @@ import {
   getCaseProgress,
 } from '../../engine/workflowEngine';
 import { getPathwayById } from '../../data/pathways';
+import { sanitiseInput } from '../../services/storageAdapter';
 
 type DetailTab = 'checklist' | 'blockers' | 'followups' | 'correspondence' | 'report' | 'timeline';
 
@@ -67,6 +68,7 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
     saveCorrespondence,
     archiveCase,
     deleteCase,
+    switchAuthMode,
     setActiveTab,
     showToast,
     t,
@@ -109,6 +111,33 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
 
   // Notes form
   const [noteInput, setNoteInput] = useState('');
+  const [noteError, setNoteError] = useState('');
+
+  // Keep editable drafts synced if user opens a different case
+  useEffect(() => {
+    setTitleDraft(adminCase.title);
+    setEditingTitle(false);
+    const rebuilt = buildCorrespondenceTemplate(
+      'application_followup',
+      adminCase,
+      state.user.displayName
+    );
+    setTemplateType('application_followup');
+    setCorrSubject(rebuilt.subject);
+    setCorrRecipient(rebuilt.recipientLabel);
+    setCorrBody(rebuilt.body);
+    setCorrPreviewMode(false);
+  }, [adminCase.id]);
+
+  const isGuest = state.user.isGuest;
+  const requireDemoAccount = (): boolean => {
+    if (!isGuest) return false;
+    showToast(
+      'Guest mode is read-only. Switch to a fictional demo account to edit or save changes.',
+      'warning'
+    );
+    return true;
+  };
 
   const pathway = getPathwayById(adminCase.pathwayId);
   const progress = getCaseProgress(adminCase);
@@ -148,15 +177,20 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
 
   const handleSaveTitle = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!titleDraft.trim()) return;
+    if (requireDemoAccount()) return;
+    if (!sanitiseInput(titleDraft, 100)) {
+      showToast('Please enter a valid fictional case title.', 'warning');
+      return;
+    }
     updateCaseTitle(adminCase.id, titleDraft);
     setEditingTitle(false);
   };
 
   const handleAddBlocker = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!blockerTitle.trim()) {
-      setBlockerError('Please enter a short description of the blocker.');
+    if (requireDemoAccount()) return;
+    if (!sanitiseInput(blockerTitle, 120)) {
+      setBlockerError('Please enter a valid short description of the blocker.');
       return;
     }
     setBlockerError('');
@@ -166,8 +200,9 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
 
   const handleScheduleFollowUp = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!fuTitle.trim() || !fuDate) {
-      setFuError('Please provide both an action title and a date.');
+    if (requireDemoAccount()) return;
+    if (!sanitiseInput(fuTitle, 120) || !fuDate) {
+      setFuError('Please provide both a valid action title and a date.');
       return;
     }
     setFuError('');
@@ -180,8 +215,9 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
   };
 
   const handleSaveLetter = () => {
-    if (!corrSubject.trim() || !corrBody.trim()) {
-      showToast('Please ensure subject and letter body are filled.', 'warning');
+    if (requireDemoAccount()) return;
+    if (!sanitiseInput(corrSubject, 160) || !sanitiseInput(corrBody, 4000)) {
+      showToast('Please ensure subject and letter body contain valid text.', 'warning');
       return;
     }
     saveCorrespondence(adminCase.id, {
@@ -194,7 +230,12 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
 
   const handleAddNote = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!noteInput.trim()) return;
+    if (requireDemoAccount()) return;
+    if (!sanitiseInput(noteInput, 500)) {
+      setNoteError('Please enter a short fictional note before saving.');
+      return;
+    }
+    setNoteError('');
     addCaseNote(adminCase.id, noteInput);
     setNoteInput('');
   };
@@ -228,22 +269,40 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
         <div className="flex items-center gap-2">
           <button
             type="button"
+            disabled={isGuest}
             onClick={() => archiveCase(adminCase.id, !adminCase.archived)}
-            className="min-h-[44px] px-3.5 rounded-xl border border-[#DCE6F7] dark:border-[#1E3254] bg-white dark:bg-[#0F1D36] text-xs font-semibold text-[#09234F] dark:text-[#F1F5FF] hover:bg-[#F5F8FF] dark:hover:bg-[#132544] inline-flex items-center gap-1.5"
+            className="min-h-[44px] px-3.5 rounded-xl border border-[#DCE6F7] dark:border-[#1E3254] bg-white dark:bg-[#0F1D36] text-xs font-semibold text-[#09234F] dark:text-[#F1F5FF] hover:bg-[#F5F8FF] dark:hover:bg-[#132544] disabled:opacity-50 inline-flex items-center gap-1.5"
           >
             {adminCase.archived ? <RotateCcw className="w-4 h-4" /> : <Archive className="w-4 h-4" />}
             {adminCase.archived ? 'Restore' : 'Archive'}
           </button>
           <button
             type="button"
+            disabled={isGuest}
             onClick={() => setConfirmDelete(true)}
-            className="min-h-[44px] px-3.5 rounded-xl border border-red-200 dark:border-red-900/60 bg-white dark:bg-[#0F1D36] text-xs font-semibold text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 inline-flex items-center gap-1.5"
+            className="min-h-[44px] px-3.5 rounded-xl border border-red-200 dark:border-red-900/60 bg-white dark:bg-[#0F1D36] text-xs font-semibold text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 disabled:opacity-50 inline-flex items-center gap-1.5"
           >
             <Trash2 className="w-4 h-4" />
             {t('common.delete')}
           </button>
         </div>
       </div>
+
+      {/* Guest read-only prompt */}
+      {isGuest && (
+        <div className="mebt-card rounded-2xl bg-[#FFF7E0] dark:bg-[#2A210D] border border-[#FFB300]/50 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <p className="text-xs sm:text-sm text-[#09234F] dark:text-[#F1F5FF]">
+            {t('cases.guestNotice')}
+          </p>
+          <button
+            type="button"
+            onClick={() => switchAuthMode('phone')}
+            className="min-h-[44px] px-4 rounded-xl bg-[#075DEB] text-white text-xs font-semibold hover:bg-[#0547B8] whitespace-nowrap shrink-0"
+          >
+            {t('cases.switchDemoAccount')}
+          </button>
+        </div>
+      )}
 
       {/* Case Overview Header Card */}
       <section className="mebt-card rounded-3xl bg-white dark:bg-[#0F1D36] border border-[#DCE6F7] dark:border-[#1E3254] p-5 sm:p-6 space-y-5">
@@ -285,9 +344,10 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
               </h1>
               <button
                 type="button"
+                disabled={isGuest}
                 onClick={() => setEditingTitle(true)}
                 aria-label="Edit case title"
-                className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl border border-[#DCE6F7] dark:border-[#1E3254] text-[#4A5D7A] dark:text-[#A9B9D4] hover:text-[#075DEB] dark:hover:text-[#6AA6FF] shrink-0"
+                className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl border border-[#DCE6F7] dark:border-[#1E3254] text-[#4A5D7A] dark:text-[#A9B9D4] hover:text-[#075DEB] dark:hover:text-[#6AA6FF] disabled:opacity-50 shrink-0"
               >
                 <Edit3 className="w-4 h-4" />
               </button>
@@ -330,9 +390,10 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
             </label>
             <select
               id="case-org-state"
+              disabled={isGuest}
               value={adminCase.state}
               onChange={(e) => updateCaseStateManual(adminCase.id, e.target.value as CaseOrgState)}
-              className="w-full min-h-[44px] rounded-xl border border-[#DCE6F7] dark:border-[#1E3254] bg-[#F5F8FF] dark:bg-[#132544] px-3 text-sm font-semibold text-[#09234F] dark:text-[#F1F5FF]"
+              className="w-full min-h-[44px] rounded-xl border border-[#DCE6F7] dark:border-[#1E3254] bg-[#F5F8FF] dark:bg-[#132544] px-3 text-sm font-semibold text-[#09234F] dark:text-[#F1F5FF] disabled:opacity-60"
             >
               {ALL_ORG_STATES.map((st) => (
                 <option key={st} value={st}>
@@ -352,9 +413,10 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
             <input
               id="case-target-date"
               type="date"
+              disabled={isGuest}
               value={adminCase.userTargetDate ?? ''}
               onChange={(e) => updateCaseTargetDate(adminCase.id, e.target.value)}
-              className="w-full min-h-[44px] rounded-xl border border-[#DCE6F7] dark:border-[#1E3254] bg-[#F5F8FF] dark:bg-[#132544] px-3 text-sm font-semibold text-[#09234F] dark:text-[#F1F5FF] tabular-nums"
+              className="w-full min-h-[44px] rounded-xl border border-[#DCE6F7] dark:border-[#1E3254] bg-[#F5F8FF] dark:bg-[#132544] px-3 text-sm font-semibold text-[#09234F] dark:text-[#F1F5FF] tabular-nums disabled:opacity-60"
             />
           </div>
         </div>
@@ -417,7 +479,10 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
                   <div className="flex items-start gap-3">
                     <button
                       type="button"
-                      onClick={() => toggleChecklistItem(adminCase.id, item.id)}
+                      onClick={() => {
+                        if (requireDemoAccount()) return;
+                        toggleChecklistItem(adminCase.id, item.id);
+                      }}
                       aria-pressed={item.completed}
                       aria-label={`Mark "${item.title}" as ${item.completed ? 'incomplete' : 'complete'}`}
                       className={`mt-0.5 w-7 h-7 min-w-[28px] rounded-lg border-2 flex items-center justify-center transition-colors shrink-0 ${
@@ -580,7 +645,10 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
                       {!b.resolved && (
                         <button
                           type="button"
-                          onClick={() => resolveBlocker(adminCase.id, b.id)}
+                          onClick={() => {
+                            if (requireDemoAccount()) return;
+                            resolveBlocker(adminCase.id, b.id);
+                          }}
                           className="min-h-[40px] px-3.5 rounded-xl bg-[#075DEB] text-white text-xs font-semibold hover:bg-[#0547B8] whitespace-nowrap shrink-0"
                         >
                           Mark resolved
@@ -738,7 +806,10 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
                     </div>
                     <button
                       type="button"
-                      onClick={() => toggleFollowUpComplete(adminCase.id, f.id)}
+                      onClick={() => {
+                        if (requireDemoAccount()) return;
+                        toggleFollowUpComplete(adminCase.id, f.id);
+                      }}
                       className={`min-h-[40px] px-3.5 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 ${
                         f.completed
                           ? 'border border-[#DCE6F7] dark:border-[#1E3254] text-[#4A5D7A] dark:text-[#A9B9D4]'
@@ -952,11 +1023,19 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
               <textarea
                 rows={3}
                 value={noteInput}
-                onChange={(e) => setNoteInput(e.target.value)}
+                onChange={(e) => {
+                  setNoteInput(e.target.value);
+                  setNoteError('');
+                }}
                 placeholder="Log counter visits, call reference numbers, or next thoughts (fictional demo only)..."
                 aria-label="Add fictional case note"
                 className="w-full rounded-xl border border-[#DCE6F7] dark:border-[#1E3254] bg-white dark:bg-[#132544] p-3 text-sm text-[#09234F] dark:text-[#F1F5FF]"
               />
+              {noteError && (
+                <p role="alert" className="text-xs font-medium text-red-700 dark:text-red-400">
+                  {noteError}
+                </p>
+              )}
               <button
                 type="submit"
                 className="w-full min-h-[44px] rounded-xl bg-[#075DEB] text-white text-sm font-semibold hover:bg-[#0547B8] inline-flex items-center justify-center gap-2"
@@ -974,14 +1053,16 @@ export const CaseDetailView: React.FC<{ adminCase: AdminCase; onBack: () => void
                       <p className="text-xs text-[#4A5D7A] dark:text-[#A9B9D4] tabular-nums">{n.createdAt.slice(0, 10)}</p>
                       <p className="text-sm text-[#09234F] dark:text-[#F1F5FF] mt-0.5">{n.text}</p>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => deleteCaseNote(adminCase.id, n.id)}
-                      aria-label="Delete note"
-                      className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-[#4A5D7A] dark:text-[#A9B9D4] hover:text-red-700 dark:hover:text-red-400"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    {!isGuest && (
+                      <button
+                        type="button"
+                        onClick={() => deleteCaseNote(adminCase.id, n.id)}
+                        aria-label="Delete note"
+                        className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-[#4A5D7A] dark:text-[#A9B9D4] hover:text-red-700 dark:hover:text-red-400"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>

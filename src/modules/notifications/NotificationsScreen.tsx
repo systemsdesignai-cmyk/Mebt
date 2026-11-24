@@ -19,6 +19,7 @@ export const NotificationsScreen: React.FC = () => {
     snoozeNotification,
     updateNotificationPrefs,
     openCase,
+    openVaultDocument,
     setActiveTab,
     t,
   } = useApp();
@@ -159,6 +160,8 @@ export const NotificationsScreen: React.FC = () => {
                         markNotificationRead(n.id);
                         if (n.relatedCaseId) {
                           openCase(n.relatedCaseId);
+                        } else if (n.relatedDocId) {
+                          openVaultDocument(n.relatedDocId);
                         } else {
                           setActiveTab(n.targetTab);
                         }

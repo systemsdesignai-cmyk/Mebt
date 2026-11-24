@@ -415,6 +415,8 @@ export const HomeScreen: React.FC = () => {
               onClick={() => {
                 if (topRecommendation.relatedCaseId) {
                   openCase(topRecommendation.relatedCaseId);
+                } else if (topRecommendation.relatedDocId) {
+                  openVaultDocument(topRecommendation.relatedDocId);
                 } else {
                   setActiveTab(topRecommendation.targetTab);
                 }
@@ -670,6 +672,8 @@ export const HomeScreen: React.FC = () => {
                         onClick={() =>
                           rec.relatedCaseId
                             ? openCase(rec.relatedCaseId)
+                            : rec.relatedDocId
+                            ? openVaultDocument(rec.relatedDocId)
                             : setActiveTab(rec.targetTab)
                         }
                         className="min-h-[38px] text-xs font-semibold text-[#075DEB] dark:text-[#6AA6FF] hover:underline inline-flex items-center gap-1"

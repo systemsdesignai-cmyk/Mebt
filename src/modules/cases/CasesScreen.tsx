@@ -13,6 +13,7 @@ import { useApp } from '../../context/AppContext';
 import { PATHWAY_DEFINITIONS, getPathwayById } from '../../data/pathways';
 import { CASE_STATE_LABELS, getCaseProgress } from '../../engine/workflowEngine';
 import { PathwayCategoryId, PathwayDefinition } from '../../types/mebt';
+import { sanitiseInput } from '../../services/storageAdapter';
 import { CaseDetailView } from './CaseDetailView';
 
 const DEEP_AND_SHARED_CREATE_IDS: PathwayCategoryId[] = [
@@ -76,8 +77,8 @@ export const CasesScreen: React.FC = () => {
 
   const handleCreateSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!caseTitle.trim()) {
-      setFormError('Please enter a fictional title for this demonstration case.');
+    if (!sanitiseInput(caseTitle, 100)) {
+      setFormError('Please enter a valid fictional title for this demonstration case.');
       return;
     }
     setFormError('');

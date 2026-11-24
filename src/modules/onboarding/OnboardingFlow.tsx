@@ -17,6 +17,7 @@ import { useApp } from '../../context/AppContext';
 import { AuthMethod, DocStatus } from '../../types/mebt';
 import { DOC_STATUS_LABELS, SUPPORTED_LANGUAGES } from '../../i18n/translations';
 import { DEMO_ACCOUNTS } from '../../data/demoDataset';
+import { sanitiseInput } from '../../services/storageAdapter';
 import { MebtLogo } from '../../components/MebtLogo';
 
 const OBJECTIVE_OPTIONS = [
@@ -72,8 +73,8 @@ export const OnboardingFlow: React.FC = () => {
   };
 
   const handleContinueFromAuth = () => {
-    if (authMethod !== 'guest' && !customName.trim()) {
-      setNameError('Please enter a fictional display name for the demo session.');
+    if (authMethod !== 'guest' && !sanitiseInput(customName, 48)) {
+      setNameError('Please enter a valid fictional display name for the demo session.');
       return;
     }
     setNameError('');
