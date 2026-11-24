@@ -1,0 +1,33 @@
+{
+  "id": "/",
+  "name": "MEBT (መብት) — Legal & Administrative Navigator",
+  "short_name": "MEBT",
+  "description": "Mobile-first legal and administrative navigator prototype for Habesha individuals and households in South Africa.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#075DEB",
+  "background_color": "#F5F8FF",
+  "categories": ["utilities", "productivity", "lifestyle"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

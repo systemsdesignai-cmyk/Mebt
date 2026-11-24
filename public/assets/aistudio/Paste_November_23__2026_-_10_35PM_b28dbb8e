@@ -1,0 +1,955 @@
+# MEBT — COMPREHENSIVE MVP DEVELOPMENT MASTER PROMPT
+
+## 1. ROLE AND RESPONSIBILITY
+
+Act as a multidisciplinary senior digital product development team consisting of:
+
+- Senior full-stack software engineers.
+- Mobile application architects.
+- Award-winning UI/UX designers.
+- Behavioural economists.
+- Cognitive psychologists specialising in human-computer interaction.
+- Accessibility specialists.
+- Quality assurance engineers.
+- Cybersecurity and privacy engineers.
+- Product managers specialising in commercially scalable SaaS products.
+
+Your responsibility is to design, implement, test and refine MEBT into a fully interactive, demonstration-ready MVP.
+
+Do not merely produce a development plan, static mockup or explanation. Build the working application.
+
+## 2. SOURCE OF TRUTH
+
+Read and understand all nine attached files before implementation:
+
+1. PROTOTYPE_PRD.md
+2. DESIGN_SPEC.md
+3. FEATURE_REGISTER.md
+4. VALIDATION_PLAN.md
+5. DECISIONS.md
+6. PROJECT_STATE.md
+7. DOCUMENT_INDEX.md
+8. MASTER_PROMPT.md
+9. F1_reference.png
+
+Treat approved decisions and requirements as binding constraints.
+
+This updated prompt supplements and supersedes the previous execution prompt but does not authorise the removal of approved features or expansion into unapproved production services.
+
+Where documents contain proposed defaults, use sound engineering and design judgment while documenting material deviations.
+
+Create an internal requirements traceability checklist mapping every approved requirement and feature ID to its corresponding implementation.
+
+Do not silently omit any feature.
+
+## 3. PRODUCT VISION
+
+Product name: MEBT (መብት).
+
+Meaning: Right or entitlement in Amharic.
+
+MEBT is a mobile-first legal and administrative navigation platform initially designed for Habesha individuals and households living in South Africa.
+
+Its purpose is to empower individuals to understand, exercise and protect their rights while navigating complicated administrative and documentation processes independently.
+
+MEBT must transform fragmented, intimidating and confusing administrative processes into clear, manageable and actionable journeys.
+
+The platform should behave like a personal administrative concierge that continuously helps users understand:
+
+- What they need to do.
+- Why they need to do it.
+- How to do it.
+- Which institution to approach.
+- What documents they need.
+- What actions remain outstanding.
+- What is preventing progress.
+- When they should follow up.
+- What alternative or escalation options may be available.
+- What they have accomplished.
+
+MEBT is not a law firm, government institution, official application status checker or substitute for qualified legal advice.
+
+The long-term vision is a comprehensive personal and household administration ecosystem. However, preserve the current MVP scope and do not implement deferred household modules.
+
+## 4. CORE EXPERIENCE OBJECTIVE
+
+The application should feel like a combination of:
+
+- The trust and polish of a premium digital banking application.
+- The clarity of an intelligent navigation system.
+- The simplicity of a personal assistant.
+- The engagement of a thoughtfully designed interactive learning application.
+- The organisation of a professional case-management system.
+
+It must not resemble an outdated government website, generic admin dashboard, legal directory or visibly AI-generated template.
+
+Design for users who may have limited technological experience, limited literacy, language barriers and stressful administrative circumstances.
+
+The experience must be intuitive enough that a first-time smartphone user can understand the primary actions without extensive training.
+
+## 5. IMPLEMENTATION REQUIREMENTS
+
+Build a genuinely functioning interactive MVP.
+
+Every visible interactive element must have a meaningful implemented behaviour.
+
+This includes:
+
+- Buttons.
+- Navigation items.
+- Search fields.
+- Filters.
+- Dropdowns.
+- Forms.
+- Toggles.
+- Progress indicators.
+- Modals.
+- Notifications.
+- Onboarding controls.
+- Language selectors.
+- Case actions.
+- Settings.
+- Document interactions.
+- Correspondence tools.
+- Premium previews.
+- Accessibility controls.
+
+Do not create dead buttons, broken links, empty routes, decorative controls or unexplained placeholder screens.
+
+Where a capability depends on deferred production infrastructure, implement a clearly labelled interactive simulation that demonstrates the intended experience without performing real external actions.
+
+Maintain consistent state across the application.
+
+Actions performed on one screen must update all relevant dependent screens automatically.
+
+For example, completing a case task must update its checklist, dashboard, next action, progress indicator and timeline.
+
+## 6. TECHNICAL ARCHITECTURE
+
+Use React, TypeScript and Vite if supported by the development environment.
+
+Build a modular, maintainable and portable codebase.
+
+Use:
+
+- Reusable UI components.
+- Strongly typed data models.
+- Centralised design tokens.
+- Structured translation dictionaries.
+- Deterministic rule-based logic.
+- Shared application state.
+- Reusable workflow definitions.
+- Clearly separated business logic and presentation.
+- Fictional demonstration datasets.
+- Versioned local persistence for fictional data.
+- Error boundaries and graceful error handling.
+
+Separate the application into logical modules for:
+
+- Authentication simulation.
+- Onboarding.
+- Dashboard.
+- Case management.
+- Workflow engine.
+- Rights library.
+- Assistance directory.
+- Document vault.
+- Notifications.
+- Correspondence.
+- Reporting.
+- Localisation.
+- User preferences.
+- Premium feature previews.
+
+Architect the application so that future production services can replace demonstration adapters without requiring a complete application rewrite.
+
+Do not integrate Gemini, OpenAI or any other paid AI inference service.
+
+Do not require an AI API key.
+
+Do not implement real authentication, real document uploads, external messaging, payments, analytics collection or a production database at this stage.
+
+## 7. BRAND IDENTITY
+
+Use the attached F1_reference.png as the approved visual reference.
+
+Preserve its defining characteristics:
+
+- Welcoming abstract shield.
+- Rounded cultural symbolism inspired by Ethiopic lettering.
+- Upward pathway.
+- Amber sunrise rays.
+- Protection, guidance and optimism.
+
+Use the approved MEBT wordmark and Ethiopic name: መብት.
+
+Do not replace the logo with a generic shield, justice scale or unrelated AI-generated symbol.
+
+Apply the following colour system consistently:
+
+- Primary royal blue: #075DEB
+- Golden amber: #FFB300
+- Deep navy: #09234F
+- Ice white: #F5F8FF
+- Pure white: #FFFFFF
+
+Use amber for meaningful accents, milestones and positive visual emphasis rather than excessive decoration.
+
+Ensure all text and interactive controls have sufficient contrast.
+
+Use the proposed typography:
+
+- Manrope for English headings.
+- Inter for English body text.
+- Noto Sans Ethiopic for Amharic and Tigrinya.
+
+Provide suitable font fallbacks.
+
+Create consistent spacing, typography, iconography, elevation, border radii and animation tokens.
+
+## 8. PREMIUM MOBILE UI/UX
+
+Prioritise the mobile experience.
+
+Combine appropriate principles from Material Design 3 and Apple's Human Interface Guidelines without blindly copying either platform.
+
+Implement:
+
+- Smooth rounded cards.
+- Generous whitespace.
+- Clear visual hierarchy.
+- Large readable typography.
+- Minimum 44px touch targets.
+- Consistent iconography with text labels.
+- Native-feeling navigation.
+- Responsive bottom sheets.
+- Contextual menus.
+- Smooth modal transitions.
+- Subtle press feedback.
+- Accessible form controls.
+- Appropriate loading states.
+- Helpful empty states.
+- Clear success and error feedback.
+- Safe-area-aware layouts.
+- Responsive desktop layouts.
+- Reduced-motion support.
+
+Use a consistent bottom navigation structure as the working default:
+
+1. Home.
+2. Cases.
+3. Rights.
+4. Vault.
+5. Profile.
+
+Make Assistance and Notifications easily accessible from the dashboard and header.
+
+Avoid excessive gradients, glassmorphism, oversized cards, unnecessary animation and visual clutter.
+
+Every screen should have a clear primary action.
+
+## 9. BEHAVIOURAL ECONOMICS AND ENGAGEMENT ENGINE
+
+Design MEBT to encourage consistent, voluntary use through genuine customer value.
+
+The objective is to make productive administrative behaviour easier, more rewarding and more likely to occur.
+
+Apply the following principles systematically throughout the experience.
+
+### 9.1 Cognitive ease
+
+Reduce the mental effort required to understand and complete administrative tasks.
+
+- Use simple language.
+- Break complex processes into manageable steps.
+- Present information progressively.
+- Replace long instructions with contextual guidance.
+- Use illustrations and examples where useful.
+- Avoid overwhelming users with unnecessary decisions.
+
+### 9.2 Choice architecture
+
+Structure available options so users can easily identify the most relevant action.
+
+- Prioritise urgent and actionable tasks.
+- Recommend an appropriate next step using deterministic rules.
+- Explain why the action is recommended.
+- Allow users to override, postpone or dismiss recommendations.
+- Avoid excessive choices on a single screen.
+
+### 9.3 Goal-gradient effect
+
+Make progress towards meaningful objectives visible.
+
+- Display completed checklist items.
+- Show remaining actions.
+- Use milestone indicators.
+- Celebrate meaningful administrative accomplishments.
+- Show progress across individual cases.
+
+Progress indicators must represent user-completed tasks only, never the probability of legal approval or official government processing progress.
+
+### 9.4 Implementation intentions
+
+Help users convert intentions into specific actions.
+
+Allow users to create plans such as:
+
+- Follow up on my application on Monday.
+- Prepare my supporting documents tomorrow.
+- Review my outstanding requirements this weekend.
+
+Provide date selection, scheduling and simulated reminders.
+
+### 9.5 Reduction of friction
+
+Minimise unnecessary effort.
+
+- Preserve progress automatically.
+- Resume incomplete workflows.
+- Reuse fictional demonstration information.
+- Provide relevant templates.
+- Offer contextual quick actions.
+- Reduce unnecessary typing.
+- Make navigation reversible.
+- Provide undo where appropriate.
+
+### 9.6 Positive reinforcement
+
+Provide meaningful feedback when users complete productive actions.
+
+Examples:
+
+- Checklist item completed.
+- Follow-up recorded.
+- Document organised.
+- Administrative blocker addressed.
+- Case preparation milestone reached.
+
+Use restrained visual celebrations and encouraging messages.
+
+Do not reward meaningless app opens, excessive screen time or repetitive interactions.
+
+### 9.7 Salience and timely prompts
+
+Surface important information at the appropriate moment.
+
+Examples:
+
+- Upcoming document expiry.
+- Outstanding follow-up.
+- Missing supporting information.
+- Unresolved administrative blocker.
+- Scheduled action.
+
+Provide clear urgency distinctions without unnecessarily alarming users.
+
+Allow users to control reminder frequency, snooze reminders and disable nonessential notifications.
+
+### 9.8 Self-efficacy
+
+Help users feel increasingly capable of managing their own administrative affairs.
+
+Explain why actions matter.
+
+Provide contextual educational guidance.
+
+Highlight genuine accomplishments.
+
+Use reassuring, empowering language without making promises about legal outcomes.
+
+### 9.9 Personal relevance
+
+Adapt the interface according to the user's optional demonstration status, selected objectives, active cases and language preferences.
+
+Do not force disclosure of immigration status.
+
+Do not infer sensitive information.
+
+### 9.10 Trust and uncertainty reduction
+
+Clearly distinguish between:
+
+- User-recorded information.
+- Demonstration information.
+- Pending verification.
+- Completed user actions.
+- Official information, if independently verified in a future release.
+
+Never fabricate official statuses, legal requirements or institutional responses.
+
+### 9.11 Ethical engagement
+
+Do not implement:
+
+- Artificial urgency.
+- Fear-based monetisation.
+- Manipulative streak penalties.
+- Gambling-style reward mechanisms.
+- Fake scarcity.
+- Shame-based notifications.
+- Compulsive engagement loops.
+- Misleading social proof.
+- Obstructive cancellation or exit mechanisms.
+
+Optimise for successful administrative outcomes, task completion, comprehension, confidence and voluntary return visits rather than time spent in the application.
+
+## 10. GUIDED ONBOARDING
+
+Create a premium, welcoming onboarding experience.
+
+The proposed sequence is:
+
+1. Branded welcome screen.
+2. Language selection.
+3. Concise explanation of MEBT's value.
+4. Guest access or simulated registration.
+5. Optional documentation status selection.
+6. Administrative objective selection.
+7. Personalised dashboard.
+
+Support demonstration flows for:
+
+- Phone number registration.
+- Email registration.
+- Google sign-in.
+- Guest access.
+
+Use fictional account identities and simulated verification.
+
+Do not request real phone numbers, passwords, identity numbers, Google credentials or immigration documents.
+
+Allow users to skip optional steps.
+
+Include a short interactive tutorial that can be dismissed, resumed or accessed later.
+
+Keep onboarding concise and demonstrate value as early as possible.
+
+## 11. HOME AND ACTION CENTRE
+
+Build a personalised, functional dashboard.
+
+Include:
+
+- Welcome message.
+- Recommended next action.
+- Active cases.
+- Outstanding tasks.
+- Upcoming deadlines.
+- Administrative blockers.
+- Recent activity.
+- Quick actions.
+- Notifications.
+- Relevant rights and guidance.
+- Meaningful progress indicators.
+
+Prioritise the most useful information.
+
+Implement a rule-based action centre that recalculates priorities when case state changes.
+
+Suggested priority logic:
+
+1. User-recorded urgent deadlines.
+2. Overdue scheduled actions.
+3. Unresolved blockers.
+4. Outstanding prerequisites.
+5. Upcoming follow-ups.
+6. Optional educational recommendations.
+
+Use fictional data and clearly distinguish user-entered dates from legally verified deadlines.
+
+## 12. ADMINISTRATIVE PATHWAY EXPLORER
+
+Include all nine approved categories:
+
+1. Citizenship and naturalisation.
+2. Permanent residence.
+3. Refugee and asylum documentation.
+4. Administrative complaints and follow-ups.
+5. Identity and civil documentation.
+6. Know Your Rights.
+7. Business and financial accessibility.
+8. Visas and permits.
+9. Emergency legal protection.
+
+Implement three complete interactive demonstration pathways:
+
+- Citizenship.
+- Permanent residence.
+- Refugee and asylum documentation.
+
+Implement shared follow-up, correspondence and escalation demonstration functionality.
+
+Other administrative pathways must have clearly labelled interactive previews consistent with the feature register.
+
+Do not present unverified legal procedures as facts.
+
+Use fictional example workflows and pending-verification labels where legal requirements have not been established.
+
+## 13. CASE MANAGEMENT ENGINE
+
+This is a central feature of MEBT.
+
+Users must be able to:
+
+- Create fictional cases.
+- View existing cases.
+- Edit case titles.
+- Select a pathway.
+- View demonstration requirements.
+- Complete checklist items.
+- Record user-reported statuses.
+- Record blockers.
+- Add fictional notes.
+- Schedule follow-ups.
+- Generate correspondence.
+- Preview case reports.
+- Review timelines.
+- Archive or delete demonstration cases with confirmation.
+
+Implement a deterministic state machine or equivalent structured rule engine.
+
+Example demonstration states:
+
+- Not started.
+- Preparing information.
+- Ready for next action.
+- Action recorded.
+- Awaiting response.
+- Follow-up scheduled.
+- Blocked.
+- Closed.
+
+These are internal organisational states, not official government application statuses.
+
+Every significant action must update the relevant case history.
+
+Implement contextual blocker resolution suggestions using clearly fictional or generic administrative guidance.
+
+Do not fabricate legal remedies.
+
+## 14. CORRESPONDENCE AND REPORT GENERATION
+
+Implement functional demonstration templates for:
+
+- Application follow-up.
+- Request for information.
+- Request for clarification.
+- Administrative complaint.
+- Escalation preparation.
+
+Allow users to:
+
+- Select a template.
+- Populate it using fictional case data.
+- Edit the generated text.
+- Preview the correspondence.
+- Copy demonstration text.
+- Save a fictional record to the case timeline.
+
+Implement a case report preview containing:
+
+- Case summary.
+- User-recorded status.
+- Completed actions.
+- Outstanding tasks.
+- Recorded blockers.
+- Correspondence history.
+- Scheduled follow-ups.
+
+Allow local copying or exporting of fictional demonstration reports if supported.
+
+Do not send real correspondence or represent templates as professionally reviewed legal documents.
+
+## 15. KNOW YOUR RIGHTS
+
+Create an accessible rights information library.
+
+Include status filters for:
+
+- South African citizens.
+- Permanent residents.
+- Recognised refugees.
+- Asylum seekers.
+- Visa and permit holders.
+- Expired documentation.
+- Undocumented or uncertain status.
+
+Use:
+
+- Simple explanations.
+- Visual categories.
+- Search.
+- Expandable information cards.
+- Source fields.
+- Verification date fields.
+- Audio demonstration controls.
+
+Clearly label all unverified legal content.
+
+Do not fabricate legislation, legal entitlements, eligibility criteria, deadlines or official source references.
+
+Do not add the excluded employment-rights module.
+
+## 16. ASSISTANCE AND EMERGENCY CENTRE
+
+Implement an interactive demonstration directory.
+
+Include institutional categories such as:
+
+- Government departments.
+- Refugee assistance organisations.
+- Legal assistance organisations.
+- Administrative complaint institutions.
+- Emergency legal protection resources.
+
+Allow users to search, filter and view fictional directory profiles.
+
+Provide simulated previews for:
+
+- Phone calls.
+- WhatsApp communication.
+- Email correspondence.
+- Website access.
+- Escalation options.
+
+No real calls, messages or external contact actions should occur.
+
+Clearly identify mock contact details and pending verification.
+
+Emergency resources and essential rights information must remain outside restrictive premium gates.
+
+## 17. DOCUMENT VAULT
+
+Build a functional simulated document-management experience using fictional metadata and bundled sample documents only.
+
+Include:
+
+- Document categories.
+- Search.
+- Filters.
+- Document previews.
+- Fictional document creation and editing.
+- Expiry tracking.
+- Document organisation.
+- Relevant case associations.
+- Missing-document indicators.
+- Simulated sharing controls.
+
+Do not allow real file selection, camera scanning, document uploads or sensitive information storage.
+
+Clearly indicate that the demonstration vault is not production-secure storage.
+
+Do not display misleading encryption or security guarantees.
+
+## 18. NOTIFICATION CENTRE
+
+Implement functional local simulated notifications.
+
+Include:
+
+- Follow-up reminders.
+- Upcoming fictional document expiries.
+- Scheduled tasks.
+- Outstanding actions.
+- Administrative blocker reminders.
+- Case activity updates.
+
+Allow users to:
+
+- Mark notifications as read.
+- Mark all as read.
+- Dismiss notifications.
+- Snooze reminders.
+- Adjust reminder preferences.
+- Navigate directly to the relevant case or task.
+
+Include demonstration preference controls for:
+
+- In-app notifications.
+- Push notifications.
+- Email.
+- WhatsApp.
+- SMS.
+- Calendar reminders.
+
+No external notifications should actually be delivered.
+
+Ensure changes in case state update relevant simulated notifications.
+
+## 19. MULTILINGUAL ACCESSIBILITY
+
+Support:
+
+- English.
+- Amharic.
+- Tigrinya.
+
+Implement centralised translation dictionaries.
+
+Language switching must update the core interface, including navigation, buttons, forms, settings, notifications, empty states and onboarding.
+
+Do not merely translate the homepage.
+
+Use appropriate Ethiopic fonts and text wrapping.
+
+Label translations as pending native-language review where applicable.
+
+Provide:
+
+- Adjustable text size.
+- Clear icon-and-text combinations.
+- High-contrast controls.
+- Keyboard navigation.
+- Accessible focus states.
+- Screen-reader labels.
+- Reduced-motion preferences.
+- Visual guidance for low-literacy users.
+- Clearly labelled simulated audio guidance.
+
+Avoid collecting voice recordings or using external translation APIs.
+
+## 20. PROFILE AND PREMIUM EXPERIENCE
+
+Implement a functional demonstration profile and settings area.
+
+Include:
+
+- Fictional profile details.
+- Language preferences.
+- Accessibility settings.
+- Notification preferences.
+- Optional documentation status.
+- Tutorial access.
+- Privacy information.
+- Demo reset.
+- Premium feature preview.
+
+Demonstrate the proposed free/premium model.
+
+Free access should include essential rights information, emergency assistance and introductory guidance.
+
+Premium previews may demonstrate advanced case-management capabilities, document organisation, follow-up automation and reporting.
+
+Provide a clearly labelled demonstration mechanism to explore premium functionality during customer testing.
+
+Do not implement real checkout, subscriptions, pricing commitments or payment-provider integrations.
+
+Keep future payment integration modular and independent of the core application.
+
+## 21. MOTION DESIGN
+
+Use purposeful motion to communicate changes in state and navigation.
+
+Implement:
+
+- Smooth screen transitions.
+- Subtle card entrance animations.
+- Responsive button feedback.
+- Animated checklist completion.
+- Smooth progress updates.
+- Natural bottom-sheet transitions.
+- Appropriate notification transitions.
+- Restrained milestone celebrations.
+
+Prefer lightweight CSS animations and performant transitions.
+
+Avoid unnecessary continuous animation, excessive parallax and distracting effects.
+
+Maintain smooth interactions on mid-range Android devices.
+
+Respect reduced-motion preferences.
+
+## 22. DEMONSTRATION DATA AND PERSISTENCE
+
+Create a coherent fictional demonstration environment containing:
+
+- Fictional user profiles.
+- Example administrative cases.
+- Completed and outstanding tasks.
+- Simulated correspondence.
+- Fictional document metadata.
+- Example blockers.
+- Scheduled reminders.
+- Case history.
+- Example directory entries.
+
+Ensure users can experience the entire application without needing to populate every field manually.
+
+Also provide a clean demonstration state for testing onboarding and empty screens.
+
+Persist fictional application state across page reloads.
+
+Ensure the demo reset function restores the original demonstration dataset.
+
+Do not persist real personal information or transmit user data to external services.
+
+Provide clear warnings against entering real case details.
+
+## 23. PWA AND RESPONSIVE EXPERIENCE
+
+Build MEBT as a mobile-first progressive web application where supported.
+
+Implement:
+
+- Responsive layouts from 360px to 1440px.
+- Appropriate application manifest.
+- MEBT application icon derived from the approved F1 direction.
+- Standalone display configuration.
+- Safe static-shell offline behaviour where feasible.
+- Graceful offline messaging.
+- Appropriate viewport configuration.
+
+Do not claim installability or offline support until tested.
+
+Do not cache sensitive records or introduce unsafe caching strategies.
+
+Preserve portability for future Android and iOS distribution.
+
+## 24. SECURITY AND PRIVACY CONSTRAINTS
+
+Although this is a prototype, follow privacy-by-design principles.
+
+- No real personal information.
+- No real credentials.
+- No real immigration documents.
+- No external AI inference.
+- No secret keys in frontend code.
+- No hidden analytics.
+- No external transmission of user-entered data.
+- No real payment processing.
+- No real external messaging.
+- No unsafe HTML rendering.
+- No misleading security claims.
+
+Sanitise user-editable demonstration inputs.
+
+Use clearly labelled demonstration states.
+
+Prepare the architecture for future production authentication, access controls, secure document storage and POPIA compliance review without prematurely implementing those services.
+
+## 25. IMPLEMENTATION AND QUALITY ASSURANCE
+
+Do not stop after creating the initial interface.
+
+Perform an implementation review against all attached requirements.
+
+Inspect every route, screen and interactive element.
+
+Verify the following end-to-end demonstration journey:
+
+1. Open MEBT.
+2. Select a language.
+3. Enter through a fictional account.
+4. Select an administrative objective.
+5. View the personalised dashboard.
+6. Create a fictional citizenship case.
+7. Complete a checklist item.
+8. Confirm dashboard and case progress update.
+9. Record a blocker.
+10. View the recommended next action.
+11. Schedule a follow-up.
+12. Confirm the simulated notification appears.
+13. Generate and edit correspondence.
+14. Save correspondence to the case timeline.
+15. Generate a case report.
+16. Open the rights library.
+17. Filter by documentation status.
+18. Explore the assistance directory.
+19. Preview a simulated contact action.
+20. Organise a fictional document.
+21. Switch the application language.
+22. Adjust accessibility preferences.
+23. Reload and verify fictional state persists.
+24. Explore premium functionality.
+25. Reset the demonstration environment.
+
+Also test guest access, the permanent residence journey, the asylum/refugee journey, empty states, invalid inputs and responsive layouts.
+
+Run the available build, type-checking, linting and automated testing commands.
+
+Fix discovered errors before reporting completion.
+
+Do not claim tests passed if they were not executed.
+
+## 26. DEFINITION OF DONE
+
+The MVP is demonstration-ready only when:
+
+- All eight approved core journeys are interactive.
+- All F01–F12 features are implemented to their specified prototype scope.
+- F13 remains excluded.
+- No approved feature has been silently removed.
+- The three priority administrative pathways are fully demonstrable.
+- Shared case-management functionality works consistently.
+- All visible interactive controls have meaningful behaviour.
+- Fictional state persists across reloads.
+- Demo reset works.
+- Navigation is consistent and functional.
+- The core interface supports all three languages.
+- Accessibility preferences function.
+- The approved F1 branding is preserved.
+- The interface feels polished and mobile-first.
+- Behavioural engagement principles are implemented ethically.
+- No real sensitive information is collected.
+- No fabricated legal claims are presented.
+- No paid AI service is required.
+- Build and available test results are documented.
+- Known limitations are disclosed.
+
+## 27. REQUIRED DELIVERABLES
+
+Deliver the actual functioning application, not merely a conceptual design.
+
+Include:
+
+- Complete source code.
+- Reusable components.
+- Structured fictional datasets.
+- Deterministic workflow engine.
+- Translation dictionaries.
+- Design tokens.
+- README.md.
+- Setup and build instructions.
+- Feature-to-screen traceability matrix.
+- Test results.
+- Known limitations.
+- Updated FEATURE_REGISTER.md.
+- Updated PROJECT_STATE.md.
+- Updated DECISIONS.md where applicable.
+- Updated DOCUMENT_INDEX.md.
+
+Distinguish clearly between:
+
+- Implemented and tested.
+- Implemented but unverified.
+- Simulated.
+- Preview only.
+- Deferred.
+- Blocked.
+
+Do not publicly deploy the application or connect external services without authorisation.
+
+## 28. FINAL EXECUTION DIRECTIVE
+
+Begin implementation now.
+
+Read all attached files, reconcile their requirements, establish the internal implementation sequence and build the application.
+
+Prioritise functional completeness, intuitive user experience, coherent state management, maintainability, accessibility and premium visual quality.
+
+If implementation must be divided into multiple stages, continue systematically without silently reducing scope.
+
+Do not substitute a static design for functional behaviour.
+
+Do not sacrifice existing functionality to improve visual appearance.
+
+Review the completed application from the perspective of a first-time Habesha user living in South Africa.
+
+The user should immediately understand what MEBT does, why it is valuable, how to use it and what their next administrative action is.
+
+The final experience should make complicated administrative affairs feel significantly simpler, more organised and more manageable.
+
+Build MEBT as a product that people would voluntarily return to because it consistently helps them accomplish meaningful objectives.
+
+Execute, test, refine and report the actual results.
